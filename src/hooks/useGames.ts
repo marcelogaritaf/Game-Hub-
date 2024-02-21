@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import apiClient, { AxiosError, CanceledError } from "../services/api-client";
-interface ApiGames {
+export interface ApiGames {
     id: number;
     name: string;
+    background_image:string
   }
-  interface FecthGames {
+interface FecthGames {
     count: number;
     // next:string,
     // previous:string,
