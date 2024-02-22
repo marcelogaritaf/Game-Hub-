@@ -14,6 +14,7 @@ export interface ApiGames {
     name: string;
     background_image:string
     parent_platforms: {platform:Platforms}[]
+    metacritic: number
   }
 interface FecthGames {
     count: number;
