@@ -15,7 +15,7 @@ const GameGrid = ({ selectGenre }: Props) => {
       {error && <Text>{error}</Text>}
       <SimpleGrid
         columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
-        paddingX={10}
+        padding={2}
         spacing={5}
         justifyItems={"center"}
       >
