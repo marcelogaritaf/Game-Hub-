@@ -16,5 +16,10 @@ export interface ApiGames {
     parent_platforms: {platform:Platforms}[]
     metacritic: number
   }
-const useGames=(selectedGenre:Genre|null)=>useData<ApiGames>('/games',{params:{genres:selectedGenre?.id}}, [selectedGenre?.id])
+const useGames=(selectedGenre:Genre|null, selectedPlatforms:Platforms|null)=>useData<ApiGames>('/games',{
+  params:{
+    genres:selectedGenre?.id, parent_platforms: selectedPlatforms?.id
+  }}, [
+    selectedGenre?.id, selectedPlatforms?.id
+  ]);
 export default useGames
