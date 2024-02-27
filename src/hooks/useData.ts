@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient, { AxiosError, CanceledError } from "../services/api-client";
 import useGames from "./useGames";
+import { AxiosRequestConfig } from "axios";
 
 interface FecthResponse<T>{
     count: number;
@@ -8,7 +9,7 @@ interface FecthResponse<T>{
     // previous:string,
     results: T[];
 }
-const useData=<T> (endpoint: string)=>{
+const useData=<T> (endpoint: string, requestConfig?:AxiosRequestConfig, deps?:any[])=>{
     const [data, setData] = useState<T[]>([]);
     const [error, setError] = useState("");
     const [isLoading, setLoading]=useState(false)
@@ -17,7 +18,7 @@ const useData=<T> (endpoint: string)=>{
     setLoading(true)
     const fectGames = async () => {
       try {
-        const res = await apiClient.get<FecthResponse<T>>(endpoint,{signal:controller.signal});
+        const res = await apiClient.get<FecthResponse<T>>(endpoint, {signal:controller.signal, ...requestConfig});
         setData(res.data.results);
         setLoading(false)
       } catch (error) {
@@ -31,7 +32,7 @@ const useData=<T> (endpoint: string)=>{
     };
     fectGames();
     return () => controller.abort()
-  }, []);
+  },deps? [...deps]:[]);
   return {data, error, isLoading}
 }
 export default useData;
