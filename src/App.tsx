@@ -6,9 +6,17 @@ import { useState } from "react";
 import { Genre } from "./hooks/useGenres";
 import PlatformSelector from "./components/PlatformSelector";
 import { Platforms } from "./hooks/useGames";
+/**
+ * esto se realiza para evitar la repeticion de lineas de codigo como estas
+ * const [selectedGenre, setSelectedGenre]=useState<Genre|null>(null)
+ * const [selectedPlatform, setSelectedPlatform]=useState<Platforms|null>(null)
+ */
+export interface GameQuery {
+  genre: Genre | null;
+  platform: Platforms | null;
+}
 function App() {
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
-  const [selectPlaform, setSelectPlatform] = useState<Platforms | null>(null);
+  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery); //typescript no permite dejar un objeto vacio // con el as gamequery ya funciona
   return (
     <Grid
       templateAreas={{
@@ -26,17 +34,19 @@ function App() {
       <Show above="lg">
         <GridItem area={"aside"} paddingX={5}>
           <GenreList
-            onSelectGenre={(genre) => setSelectedGenre(genre)}
-            selectGenre={selectedGenre}
+            onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
+            selectGenre={gameQuery.genre}
           />
         </GridItem>
       </Show>
       <GridItem area={"main"}>
         <PlatformSelector
-          selectedPlatform={selectPlaform}
-          onselectPlatform={(platform) => setSelectPlatform(platform)}
+          selectedPlatform={gameQuery.platform}
+          onselectPlatform={(platform) =>
+            setGameQuery({ ...gameQuery, platform })
+          }
         />
-        <GameGrid selectGenre={selectedGenre} selectPlaforms={selectPlaform} />
+        <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
   );
