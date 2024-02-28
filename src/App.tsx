@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   ButtonGroup,
   Grid,
@@ -15,6 +16,7 @@ import PlatformSelector from "./components/PlatformSelector";
 import { Platforms } from "./hooks/useGames";
 import SortSelector from "./components/SortSelector";
 import "./index.css";
+import GameHeading from "./components/GameHeading";
 /**
  * esto se realiza para evitar la repeticion de lineas de codigo como estas
  * const [selectedGenre, setSelectedGenre]=useState<Genre|null>(null)
@@ -53,20 +55,23 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area={"main"}>
-        <HStack spacing={5} paddingLeft={2} marginBottom={2}>
-          <PlatformSelector
-            selectedPlatform={gameQuery.platform}
-            onselectPlatform={(platform) =>
-              setGameQuery({ ...gameQuery, platform })
-            }
-          />
-          <SortSelector
-            Order={gameQuery.sortOrder}
-            onSelectOrder={(sortOrder) =>
-              setGameQuery({ ...gameQuery, sortOrder })
-            }
-          />
-        </HStack>
+        <Box paddingLeft={2}>
+          <GameHeading gameQuery={gameQuery} />
+          <HStack spacing={5} marginBottom={2}>
+            <PlatformSelector
+              selectedPlatform={gameQuery.platform}
+              onselectPlatform={(platform) =>
+                setGameQuery({ ...gameQuery, platform })
+              }
+            />
+            <SortSelector
+              Order={gameQuery.sortOrder}
+              onSelectOrder={(sortOrder) =>
+                setGameQuery({ ...gameQuery, sortOrder })
+              }
+            />
+          </HStack>
+        </Box>
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
