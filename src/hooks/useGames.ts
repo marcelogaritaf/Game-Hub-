@@ -19,7 +19,7 @@ export interface ApiGames {
   }
 const useGames=(gameQuery:GameQuery)=>useData<ApiGames>('/games',{
   params:{
-    genres:gameQuery.genre?.id, parent_platforms: gameQuery.platform?.id
+    genres:gameQuery.genre?.id, parent_platforms: gameQuery.platform?.id, ordering: gameQuery.sortOrder
   }}, [
     gameQuery
   ]);
