@@ -14,6 +14,7 @@ import { Genre } from "./hooks/useGenres";
 import PlatformSelector from "./components/PlatformSelector";
 import { Platforms } from "./hooks/useGames";
 import SortSelector from "./components/SortSelector";
+import "./index.css";
 /**
  * esto se realiza para evitar la repeticion de lineas de codigo como estas
  * const [selectedGenre, setSelectedGenre]=useState<Genre|null>(null)
@@ -23,6 +24,7 @@ export interface GameQuery {
   genre: Genre | null;
   platform: Platforms | null;
   sortOrder: string;
+  searchText: string;
 }
 function App() {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery); //typescript no permite dejar un objeto vacio // con el as gamequery ya funciona
@@ -38,7 +40,9 @@ function App() {
       }}
     >
       <GridItem area={"nav"}>
-        <NavBar />
+        <NavBar
+          onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })}
+        />
       </GridItem>
       <Show above="lg">
         <GridItem area={"aside"} paddingX={5}>
