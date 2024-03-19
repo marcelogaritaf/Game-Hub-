@@ -31,7 +31,9 @@ const useGames=(gameQuery:GameQuery)=>useInfiniteQuery<FecthResponse<ApiGames>>(
   getNextPageParam:(lastPage, allPages)=>{
     return lastPage.next? allPages.length+1:undefined;
   },
-  initialPageParam:undefined
+  initialPageParam:undefined,
+  staleTime: 24*60*60*1000//24hrs
+
 });
 export default useGames
 /**
