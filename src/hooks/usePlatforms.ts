@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-import apiClient from "../services/api-client"
-import { FecthResponse } from "../services/api-client"
-
+import { default as APIClient, FecthResponse } from "../services/api-client"
+const apiClient = new APIClient<Platforms>('/platforms/lists/parents')
 export interface Platforms{
     id:number,
     name:string
@@ -9,8 +8,7 @@ export interface Platforms{
 }
 const usePlatforms=()=>useQuery<FecthResponse<Platforms>>({
     queryKey:['plaforms'],
-    queryFn:()=> apiClient.get<FecthResponse<Platforms>>('/platforms/lists/parents')
-    .then(res=>res.data)
+    queryFn:apiClient.getAll
 })
 export default usePlatforms
 /**

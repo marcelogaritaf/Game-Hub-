@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import apiClient from "../services/api-client";
+import APIClient from "../services/api-client";
 import { FecthResponse } from "../services/api-client";
+const apiClient = new APIClient<Genre>('/genres')
 export interface Genre{
  id:number,
  name:string
@@ -8,7 +9,6 @@ export interface Genre{
 }
 const useGenres= ()=> useQuery<FecthResponse<Genre>>({
     queryKey:['genres'],
-    queryFn:()=>apiClient.get<FecthResponse<Genre>>('/genres')
-    .then(res=>res.data)    
+    queryFn:apiClient.getAll
 })
 export default useGenres;

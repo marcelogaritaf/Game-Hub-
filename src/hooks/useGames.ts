@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
-import apiClient from "../services/api-client";
-import { FecthResponse } from "../services/api-client";
+import { default as APIClient, FecthResponse} from "../services/api-client";
 import { Platforms } from "./usePlatforms";
 /**
  * eso es debido a que es un array de objetos que cada objecto tiene
  * una propiedad llamada platform
  */
+const apiClient =  new APIClient<ApiGames>('/games')
 export interface ApiGames {
     id: number;
     name: string;
@@ -17,8 +17,8 @@ export interface ApiGames {
   }
 const useGames=(gameQuery:GameQuery)=>useQuery<FecthResponse<ApiGames>>({
   queryKey:['games', gameQuery],
-  queryFn:()=>apiClient.get<FecthResponse<ApiGames>>('/games',
-  {
+  queryFn:()=>apiClient.getAll(
+  {// se debe de poner el parametro de las configuraciones 
     params:{
       genres:gameQuery.genre?.id, 
       parent_platforms: gameQuery.platform?.id, 
@@ -26,6 +26,6 @@ const useGames=(gameQuery:GameQuery)=>useQuery<FecthResponse<ApiGames>>({
       search: gameQuery.searchText
     }
   }
-  ).then(res=>res.data)
+  )
 })
 export default useGames
