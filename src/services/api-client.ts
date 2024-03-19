@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, CanceledError } from "axios";
 export interface FecthResponse<T>{
     count: number;
-    // next:string,
+     next:string|null,
     // previous:string,
     results: T[];
 }
