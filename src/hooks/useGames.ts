@@ -2,11 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
 import apiClient from "../services/api-client";
 import { FecthResponse } from "../services/api-client";
-export interface Platforms{
-    id:number,
-    name:string,
-    slug:string
-}
+import { Platforms } from "./usePlatforms";
 /**
  * eso es debido a que es un array de objetos que cada objecto tiene
  * una propiedad llamada platform
