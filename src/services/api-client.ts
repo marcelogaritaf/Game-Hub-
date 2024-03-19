@@ -1,4 +1,10 @@
 import axios, { AxiosError, CanceledError } from "axios";
+export interface FecthResponse<T>{
+    count: number;
+    // next:string,
+    // previous:string,
+    results: T[];
+}
 export default axios.create({// la api key 
     baseURL:'https://api.rawg.io/api',
     params:{
