@@ -23,8 +23,8 @@ import GameHeading from "./components/GameHeading";
  * const [selectedPlatform, setSelectedPlatform]=useState<Platforms|null>(null)
  */
 export interface GameQuery {
-  genre: Genre | null;
-  platform: Platforms | null;
+  genreId?: number;
+  platformId?: number;
   sortOrder: string;
   searchText: string;
 }
@@ -49,8 +49,10 @@ function App() {
       <Show above="lg">
         <GridItem area={"aside"} paddingX={5}>
           <GenreList
-            onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
-            selectGenre={gameQuery.genre}
+            onSelectGenre={(genre) =>
+              setGameQuery({ ...gameQuery, genreId: genre.id })
+            }
+            selectGenreId={gameQuery.genreId}
           />
         </GridItem>
       </Show>
@@ -59,9 +61,9 @@ function App() {
           <GameHeading gameQuery={gameQuery} />
           <HStack spacing={5} marginBottom={2}>
             <PlatformSelector
-              selectedPlatform={gameQuery.platform}
+              selectedPlatformId={gameQuery.platformId}
               onselectPlatform={(platform) =>
-                setGameQuery({ ...gameQuery, platform })
+                setGameQuery({ ...gameQuery, platformId: platform.id })
               }
             />
             <SortSelector
