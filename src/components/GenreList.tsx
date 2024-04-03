@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import useGenres, { Genre } from "../hooks/useGenres";
 import {
   Button,
   HStack,
@@ -8,15 +6,15 @@ import {
   List,
   ListItem,
   Spinner,
-  Text,
 } from "@chakra-ui/react";
+import useGenres from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
-interface Props {
-  onSelectGenre: (genre: Genre) => void;
-  selectGenreId?: number;
-}
-const GenreList = ({ selectGenreId, onSelectGenre }: Props) => {
+import useGameQueryStore from "../store";
+
+const GenreList = () => {
   const { data, error, isLoading } = useGenres();
+  const selectGenreId = useGameQueryStore((s) => s.gameQuery.genreId);
+  const setGenreId = useGameQueryStore((s) => s.setGenreId);
   if (error) return null;
   if (isLoading) return <Spinner />;
   return (
@@ -37,7 +35,7 @@ const GenreList = ({ selectGenreId, onSelectGenre }: Props) => {
                 objectFit={"cover"}
               />{" "}
               <Button
-                onClick={() => onSelectGenre(genre)}
+                onClick={() => setGenreId(genre.id)}
                 fontSize={"lg"}
                 variant={"link"}
                 fontWeight={genre.id === selectGenreId ? "bold" : "normal"}
@@ -55,3 +53,14 @@ const GenreList = ({ selectGenreId, onSelectGenre }: Props) => {
 };
 
 export default GenreList;
+/**
+ * lo mismo que el componente pasado se eliman las props pero en este caso
+ * no solo se necesita la funcion sino tambien el numero
+ * entonces se realiza de la siguiente manera
+ * const selectGenreId = useGameQueryStore((s) => s.gameQuery.genreId);
+  const setGenreId = useGameQueryStore((s) => s.setGenreId);
+  el primero para el numero entero
+  el segundo para la funcion 
+  como en el componente pasado se hace que solo cuando este reciba una modificacion solo 
+  eso se renderice 
+ */

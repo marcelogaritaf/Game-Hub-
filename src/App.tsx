@@ -22,14 +22,9 @@ import GameHeading from "./components/GameHeading";
  * const [selectedGenre, setSelectedGenre]=useState<Genre|null>(null)
  * const [selectedPlatform, setSelectedPlatform]=useState<Platforms|null>(null)
  */
-export interface GameQuery {
-  genreId?: number;
-  platformId?: number;
-  sortOrder: string;
-  searchText: string;
-}
+
 function App() {
-  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery); //typescript no permite dejar un objeto vacio // con el as gamequery ya funciona
+  // const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery); //typescript no permite dejar un objeto vacio // con el as gamequery ya funciona
   return (
     <Grid
       templateAreas={{
@@ -42,42 +37,33 @@ function App() {
       }}
     >
       <GridItem area={"nav"}>
-        <NavBar
-          onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })}
-        />
+        <NavBar />
       </GridItem>
       <Show above="lg">
         <GridItem area={"aside"} paddingX={5}>
-          <GenreList
-            onSelectGenre={(genre) =>
-              setGameQuery({ ...gameQuery, genreId: genre.id })
-            }
-            selectGenreId={gameQuery.genreId}
-          />
+          <GenreList />
         </GridItem>
       </Show>
       <GridItem area={"main"}>
         <Box paddingLeft={2}>
-          <GameHeading gameQuery={gameQuery} />
+          <GameHeading />
           <HStack spacing={5} marginBottom={2}>
-            <PlatformSelector
-              selectedPlatformId={gameQuery.platformId}
-              onselectPlatform={(platform) =>
-                setGameQuery({ ...gameQuery, platformId: platform.id })
-              }
-            />
-            <SortSelector
-              Order={gameQuery.sortOrder}
-              onSelectOrder={(sortOrder) =>
-                setGameQuery({ ...gameQuery, sortOrder })
-              }
-            />
+            <PlatformSelector />
+            <SortSelector />
           </HStack>
         </Box>
-        <GameGrid gameQuery={gameQuery} />
+        <GameGrid />
       </GridItem>
     </Grid>
   );
 }
 
 export default App;
+/**
+ * como paso para refectorizar todo el codigo
+ * se debe de quitar el local state del gameQuery
+ * con esto se debe de modificar(eliminar) cada componente que utilice como props dicho state
+ *
+ * navBar side=> lo que paso al haber eliminar los props de los componentes del navBar se quita el error
+ * genresList side=> esta completo
+ */

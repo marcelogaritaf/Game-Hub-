@@ -1,16 +1,15 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
-interface Props {
-  onSearch: (SearchText: string) => void;
-}
-const SearchInputGames = ({ onSearch }: Props) => {
+import useGameQueryStore from "../store";
+const SearchInputGames = () => {
   const searchRef = useRef<HTMLInputElement>(null);
+  const setSearchText = useGameQueryStore((s) => s.setSearchText);
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (searchRef.current) onSearch(searchRef.current.value);
+        if (searchRef.current) setSearchText(searchRef.current.value);
       }}
     >
       <InputGroup>
@@ -27,3 +26,12 @@ const SearchInputGames = ({ onSearch }: Props) => {
 };
 
 export default SearchInputGames;
+/**
+ * lo que se realiza en este componente es eliminar el props que se utiliza y en vez del props
+ * se utiliza la libreria del store 
+  const setSearchText=useGameQueryStore(s=>s.setSearchText)
+ * con la linea lo que hace esq solo cuando ese estado cambie solo eso se renderice 
+  cosa que no pasaria si se dejara de la siguiente manera 
+  const {setSearchText}=useGameQueryStore()
+
+ */
