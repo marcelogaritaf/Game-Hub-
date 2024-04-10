@@ -2,22 +2,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import ms from "ms";
 import { default as APIClient, FecthResponse } from "../services/api-client";
 import useGameQueryStore from "../store";
-import { Platforms } from "./usePlatforms";
+import { ApiGames } from "../entities/ApiGames";
 /**
  * eso es debido a que es un array de objetos que cada objecto tiene
  * una propiedad llamada platform
  */
 const apiClient =  new APIClient<ApiGames>('/games')
-export interface ApiGames {
-    id: number;
-    name: string;
-    slug:string
-    description_raw:string
-    background_image:string
-    parent_platforms: {platform:Platforms}[]
-    metacritic: number, 
-    rating_top:number,
-  }
 const useGames=()=>{
   const gameQuery=useGameQueryStore(s=>s.gameQuery)
   return useInfiniteQuery<FecthResponse<ApiGames>>({
