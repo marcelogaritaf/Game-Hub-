@@ -41,3 +41,6 @@
 //  */
 
 // ya no se necesita
+
+//en la parte de fefactorizar las entities se recomienda realizar un export default ya que si no hay mas 
+exports en el file la diferencia esq a la hora de importar la entity lo hace de una forma mas sencilla sin los{}
